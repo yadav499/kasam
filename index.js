@@ -4,8 +4,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.post("/register",(req,res)=>{
-    console.log(req.body);
-    res.send(req.body);
+    const {name, email, password} = req.body;
+    console.log({name, email, password});
+    res.send({name, email, password});
 });
 
 app.get("/",(req,res)=>{
