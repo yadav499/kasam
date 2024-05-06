@@ -1,14 +1,20 @@
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const userModel = require("./models/userModel");
 const app = express();
 app.use(cors());
 app.use(express.json());
 connectDB();
-app.post("/register",(req,res)=>{
+app.post("/register",async(req,res)=>{
     const {name, email, password} = req.body;
-    console.log({name, email, password});
-    res.send({name, email, password});
+    const user = new userModel({name, email, password});
+    await user.save();
+    return res.status(200).send({
+        success:true,
+        message:"registered successfully",
+        user
+    })
 });
 
 app.get("/",(req,res)=>{
